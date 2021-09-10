@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using HarmonyLib;
@@ -49,7 +51,18 @@ namespace MotorbikeSound
         [HarmonyPatch(typeof(GameLocation), "localSoundAt")]
         public class SoundPatches
         {
-
+            public static IEnumerable<Horse> GetHorsesIn(GameLocation location)
+            {
+                if (!Context.IsMultiplayer)
+                {
+                    return from h in ((IEnumerable)location.characters).OfType<Horse>()
+                           select h;
+                }
+                return (from h in ((IEnumerable)location.characters).OfType<Horse>()
+                        select h).Concat(from player in (IEnumerable<Farmer>)location.farmers
+                                         where player.mount != null
+                                         select player.mount).Distinct();
+            }
 
             private static IMonitor Monitor;
 
@@ -61,9 +74,13 @@ namespace MotorbikeSound
 
             public static void localSoundAt_prefix(GameLocation __instance, ref string audioName, Vector2 position)
             {
-                if (audioName.EndsWith("step", StringComparison.InvariantCultureIgnoreCase) && __instance.characters.OfType<Horse>().Union(new[] { Game1.player.mount }).FirstOrDefault(h => h != null && h.getTileLocation() == position) is Horse horse && horse != null && horse.Name == "Ducati")
+                foreach (Horse horse1 in GetHorsesIn(__instance))
                 {
-                    audioName = "vroom";
+                    //if (audioName.EndsWith("step", StringComparison.InvariantCultureIgnoreCase) && __instance.characters.OfType<Horse>().Union(new[] { Game1.player.mount }).FirstOrDefault(h => h != null && h.getTileLocation() == position) is Horse horse && horse != null && horse.Name == "Ducati")
+                    if (audioName.EndsWith("step", StringComparison.InvariantCultureIgnoreCase) && horse1.getTileLocation() == position && horse1.rider != null && horse1.Name == "Ducati")
+                    {
+                        audioName = "vroom";
+                    }
                 }
 
             }
