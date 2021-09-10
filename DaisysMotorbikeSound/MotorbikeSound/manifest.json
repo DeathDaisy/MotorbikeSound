@@ -1,0 +1,10 @@
+﻿{
+  "Name": "Motorbike Sounds",
+  "Author": "DeathDaisy",
+  "Version": "1.0.0",
+  "Description": "Makes it possible for horse sounds and bike sounds to exist together in harmony.",
+  "UniqueID": "DeathDaisy.MotorbikeSounds",
+  "EntryDll": "MotorbikeSound.dll",
+  "MinimumApiVersion": "3.0.0",
+  "UpdateKeys": []
+}

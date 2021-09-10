@@ -1,0 +1,11 @@
+{
+  "Name": "Sound Effect for Motorbike Sounds",
+  "Author": "DeathDaisy",
+  "Version": "1.0.0",
+  "Description": "Thank you to SayonLiberty for the sound effect from the mod Horse to Vehicle!",
+  "UniqueID": "DeathDaisy.MotorbikeSounds.Vroom",
+  "ContentPackFor": {
+    "UniqueID": "Platonymous.CustomMusic",
+    "MinimumVersion": "1.0.0"
+  }  
+}
