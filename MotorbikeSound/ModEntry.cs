@@ -64,6 +64,7 @@ namespace MotorbikeSound
     [HarmonyPatch(typeof(GameLocation), "localSoundAt")]
     public class SoundPatches
     {
+        //I stole this from Multiplayer Horse Reskin. Thank you!
         public static IEnumerable<Horse> GetHorsesIn(GameLocation location)
         {
             if (!Context.IsMultiplayer)
@@ -91,6 +92,7 @@ namespace MotorbikeSound
         {
             foreach (Horse horse1 in GetHorsesIn(__instance))
             {
+                //thank you Blueberry for the linq stuff!
                 if (audioName.EndsWith("step", StringComparison.InvariantCultureIgnoreCase) && horse1.getTileLocation() == position && horse1.rider != null && horse1.Name == bikeName)
                 {
                     audioName = "vroom";
